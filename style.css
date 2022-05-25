@@ -1,1 +1,82 @@
 @charset "UTF-8";
+:root {
+    --base-color-1: rgb(69, 78, 84);
+    --base-color-2: rgb(76, 86, 92);
+    --main-color-1: rgb(238, 246, 255);
+    --main-color-2: rgb(128, 255, 0);
+    --accent-color: rgb(255, 0, 119);
+}
+
+body{
+    background-color: var(--base-color-1);
+    color: var(--main-color-1);
+    gap: 0.2em;
+
+}
+
+#right{
+    gap: 0.2em;
+
+}
+
+.base1{
+    display: grid;
+    grid-template-columns: 500px 1fr;
+}
+
+#keypad{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 0.2em;
+
+    width: 500px;
+    height: 375px;
+}
+
+#mainkey{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.2em;
+
+    width: 300px;
+    height: 375px;
+    /* background-color: var(--base-color-2); */
+}
+
+#subkey{
+    display: grid;
+    gap: 0.2em;
+    width: 100%;
+
+}
+ 
+.key{
+    width: 99%;
+    height: 99%;
+    display: grid;
+    place-items: center;
+    font-size: 200%;
+    background-color: var(--base-color-2);
+    border-radius: 15px
+}
+
+#textbox{
+    font-size: larger;
+    width: 100%;
+    background-color: var(--base-color-2);
+    color: var(--main-color-1);
+    border-width: 0 0 1px 0;
+    border-style: solid;
+}
+
+#fomula{
+    width: 100%;
+    background-color: var(--base-color-2);
+}
+
+button{
+    display: ;
+    background-color: var(--base-color-2);
+    color: var(--main-color-1);
+    border: 0;
+}

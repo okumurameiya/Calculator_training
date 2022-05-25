@@ -11,12 +11,71 @@
     </head>
 
     <body>
-        <!--電卓テスト-->
-        <input type="text" placeholder="電卓テスト" id="fomula">
-        <button onclick="CalcTest()">送信</button>
-        <p id="result">
-            result
-        </p>
+        <section class="base1">
+            <!--右側-->
+            <section id="right">
+                <!--メニュー等-->
+                <section>
+                menu
+                </section>
 
+                <!--キーパッド等-->
+                <section id="keypad">
+                    <!--キーパッド-->
+                    <section id="mainkey">
+                        <div onclick="InputKey()" class="key">(</div>
+                        <div onclick="InputKey()" class="key">)</div>
+                        <div onclick="InputKey()" class="key">BS</div>
+                        <div onclick="InputKey()" class="key">^</div>
+                        <div onclick="InputKey()" class="key">7</div>
+                        <div onclick="InputKey()" class="key">8</div>
+                        <div onclick="InputKey()" class="key">9</div>
+                        <div onclick="InputKey()" class="key">/</div>
+                        <div onclick="InputKey()" class="key">4</div>
+                        <div onclick="InputKey()" class="key">5</div>
+                        <div onclick="InputKey()" class="key">6</div>
+                        <div onclick="InputKey()" class="key">*</div>
+                        <div onclick="InputKey()" class="key">1</div>
+                        <div onclick="InputKey()" class="key">2</div>
+                        <div onclick="InputKey()" class="key">3</div>
+                        <div onclick="InputKey()" class="key">-</div>
+                        <div onclick="InputKey()" class="key">0</div>
+                        <div onclick="InputKey()" class="key">.</div>
+                        <div onclick="InputKey()" class="key">=</div>
+                        <div onclick="InputKey()" class="key">+</div>
+                    </section>
+                    
+                    <section id="subkey">
+                        <div class="key">√</div>
+                        <div class="key">sin</div>
+                        <div class="key">cos</div>
+                        <div class="key">tan</div>
+                        <div class="key">smpl</div>
+                    </section>
+                </section>
+
+                <!--式、結果-->
+                <section id="fomula">
+                    <!--入力/式表示-->
+                    <input type="text" placeholder="式を入力" onkeyup="Input(value);" id="textbox">
+                    <p id="result">
+                        result
+                    </p>
+                    <button onclick="ClearInput();">Storage</button>
+                    <button onclick="ClearInput();">Clear</button>
+                </section>
+            </section>
+
+            <!--左側-->
+            <section id="Left">
+                log
+                <p class="log">
+                    
+                </p>
+            </section>
+        </section>
+        
+
+        
     </body>
 </html>
