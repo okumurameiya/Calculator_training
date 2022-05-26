@@ -1,17 +1,19 @@
-/*
-function KeyInput(){
-    let 
-}*/
+
 let input;
 let fomula;
 let result;
 
-// キー入力された文字列を取得
-function Input(){
-    input = document.getElementById(`input`).value;
+// 入力された文字列を取得
+function GetInput(){
+    return textbox.value;
+}
+// キー入力された式を計算
+function KeyInput(){
+    input = GetInput();
     fomula = input;
-    result = Calc(fomula);
-    ShowResult(fomula, result);
+    result = Calc();
+    ShowResult();
+}
 }
 
  
@@ -26,9 +28,21 @@ function Calc(){
      return Function('return ('+fomula+');')();
 }
 
-// 入力欄クリア
+// 入力欄クリア(計算結果クリアできず)
 function ClearInput(){
-    input = null; 
+    document.getElementById(`textbox`).value = null;
+}
+
+// 式と結果の保存機能(resultに値が残ると予期しない挙動になる)
+function StoreInput(){
+    var textbox_element = document.getElementById('log');
+
+    // 新しいHTML要素を作成
+    var new_element = document.createElement('p');
+    new_element.textContent = `${fomula} = ${result}`;
+
+    // 指定した要素の中の上部に挿入
+    textbox_element.prepend(new_element);
 }
 
 // 平方根テスト
@@ -39,4 +53,22 @@ function Root(fomula){
      
     }
     return replaced;
+}
+
+
+// ショートカットキー機能
+document.addEventListener('keypress', keypress_ivent);
+
+function keypress_ivent(e) {
+
+    // Enter: Store
+	if(e.key === 'Enter'){
+        StoreInput();
+	}
+
+    // Delete: Clear(不具合)
+    if(e.key === 'Escape'){
+        ClearInput();
+	}
+	return false; 
 }
