@@ -14,6 +14,17 @@ function KeyInput(){
     result = Calc();
     ShowResult();
 }
+
+// ボタン入力(未)
+function ButtonInput(){
+    // 押されたボタンに対応した値を返す関数を作る
+      
+    // 取得した値を式の末尾に挿入    
+    input = GetInput();
+    fomula = input + key;
+
+    result = Calc();
+    ShowResult();
 }
 
  
