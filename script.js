@@ -28,14 +28,13 @@ document.addEventListener('click', function (event) {
 // 文字列から計算
 function Calc(fomula){
     if(fomula.match(';') == null){
-        console.log("test")
         result = eval(fomula);
         ResultOutput(fomula);
     }
 }
 
 // 計算結果を表示
-function ResultOutput(){
+function ResultOutput(fomula){
     output = document.getElementById(`result`).firstChild;
     if(result==null){
         output.nodeValue = `result`;
