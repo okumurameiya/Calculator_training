@@ -1,7 +1,8 @@
 
 let input;
 let fomula;
-let result;
+let result=null;
+let output;
 
 // キーダウンで入力欄にフォーカス
 document.addEventListener('keydown', function () {
@@ -10,23 +11,44 @@ document.addEventListener('keydown', function () {
 
 // ボタン入力
 document.addEventListener('click', function (event) {
+    let key = event.target.textContent
+
     if(event.target.className == 'key'){
-        textbox.value += event.target.textContent;
-        Calc(textbox.value);
+        if(key=='BS'){    // バックスペース
+            textbox.value = textbox.value.slice( 0, -1 ) ;
+        }else{
+            textbox.value += key;   // 押されたキーの文字を入力式に追加
+        }
+        fomula = textbox.value;
+        Calc(fomula);
     }
   }, false);
 
-// 文字列から計算,結果を表示
+
+// 文字列から計算
 function Calc(fomula){
-    result = Function('return ('+fomula+');')();
-    var output = document.getElementById(`result`);
-    output.firstChild.nodeValue = `${fomula} = ${result}`;
+    if(fomula.match(';') == null){
+        console.log("test")
+        result = eval(fomula);
+        ResultOutput(fomula);
+    }
 }
 
+// 計算結果を表示
+function ResultOutput(){
+    output = document.getElementById(`result`).firstChild;
+    if(result==null){
+        output.nodeValue = `result`;
+    }else{
+        output.nodeValue = `${fomula} = ${result}`;
+    }
+}
 
-// 入力欄クリア(計算結果クリアできず)
+// 入出力表示クリア
 function ClearInput(){
-    document.getElementById(`textbox`).value = null;
+    textbox.value = null;
+    result = null;
+    ResultOutput(null);
 }
 
 // 式と結果の保存機能(resultに値が残ると予期しない挙動になる)
