@@ -3,41 +3,26 @@ let input;
 let fomula;
 let result;
 
-// 入力された文字列を取得
-function GetInput(){
-    return textbox.value;
-}
-// キー入力された式を計算
-function KeyInput(){
-    input = GetInput();
-    fomula = input;
-    result = Calc();
-    ShowResult();
-}
+// キーダウンで入力欄にフォーカス
+document.addEventListener('keydown', function () {
+    textbox.focus();
+}, false);
 
-// ボタン入力(未)
-function ButtonInput(){
-    // 押されたボタンに対応した値を返す関数を作る
-      
-    // 取得した値を式の末尾に挿入    
-    input = GetInput();
-    fomula = input + key;
+// ボタン入力
+document.addEventListener('click', function (event) {
+    if(event.target.className == 'key'){
+        textbox.value += event.target.textContent;
+        Calc(textbox.value);
+    }
+  }, false);
 
-    result = Calc();
-    ShowResult();
-}
-
- 
-// 結果表示;
-function ShowResult(){
+// 文字列から計算,結果を表示
+function Calc(fomula){
+    result = Function('return ('+fomula+');')();
     var output = document.getElementById(`result`);
     output.firstChild.nodeValue = `${fomula} = ${result}`;
 }
 
-// 文字列を計算式に変換
-function Calc(){
-     return Function('return ('+fomula+');')();
-}
 
 // 入力欄クリア(計算結果クリアできず)
 function ClearInput(){
@@ -67,6 +52,7 @@ function Root(fomula){
 }
 
 
+
 // ショートカットキー機能
 document.addEventListener('keypress', keypress_ivent);
 
@@ -78,7 +64,7 @@ function keypress_ivent(e) {
 	}
 
     // Delete: Clear(不具合)
-    if(e.key === 'Escape'){
+    if(e.key === 'Esc'){
         ClearInput();
 	}
 	return false; 
