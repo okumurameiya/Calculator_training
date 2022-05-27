@@ -35,11 +35,13 @@ function Calc(fomula){
 
 // 計算結果を表示
 function ResultOutput(fomula){
-    output = document.getElementById(`result`).firstChild;
+    let result_out;
+    result_out = document.getElementById(`result`).firstChild;
+    output = `${fomula} = ${result}`
     if(result==null){
-        output.nodeValue = `result`;
+        result_out.nodeValue = `result`;
     }else{
-        output.nodeValue = `${fomula} = ${result}`;
+        result_out.nodeValue = output;
     }
 }
 
@@ -51,12 +53,12 @@ function ClearInput(){
 }
 
 // 式と結果の保存機能(resultに値が残ると予期しない挙動になる)
-function StoreInput(){
+function Store(){
     var textbox_element = document.getElementById('log');
 
     // 新しいHTML要素を作成
     var new_element = document.createElement('p');
-    new_element.textContent = `${fomula} = ${result}`;
+    new_element.textContent = output;
 
     // 指定した要素の中の上部に挿入
     textbox_element.prepend(new_element);
@@ -72,8 +74,6 @@ function Root(fomula){
     return replaced;
 }
 
-
-
 // ショートカットキー機能
 document.addEventListener('keypress', keypress_ivent);
 
@@ -81,7 +81,7 @@ function keypress_ivent(e) {
 
     // Enter: Store
 	if(e.key === 'Enter'){
-        StoreInput();
+        Store();
 	}
 
     // Delete: Clear(不具合)
