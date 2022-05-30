@@ -4,6 +4,9 @@ let formula;
 let result=null;
 let output;
 
+let modulo;
+let mode_modulo
+
 
 var adjust_keyInput = ['√', 'sin', 'cos', 'tan', ]; 
 var adjust_before   = ['√(', 'sin(', 'cos(', 'tan(', ]; 
@@ -22,6 +25,8 @@ document.addEventListener('click', function (event) {
     if(event.target.className == 'key'){
         if(key=='BS'){    // バックスペース
             textbox.value = textbox.value.slice( 0, -1 ) ;
+        }else if(key=='mod'){
+            mode_modulo=true;
         }else{
             textbox.value += key;   // 押されたキーの文字を入力式に追加
 
@@ -58,19 +63,29 @@ function AdjustFormula(input){
 function Calc(input){
     formula = AdjustFormula(input);
     result = eval(formula);
-    ResultOutput(formula);
     // console.log(result)
     // console.log(formula)
 
+    if(mode_modulo==true){
+        let formula_modulo = formula.replace('/', '%');
+        modulo = eval(formula_modulo);
+        result = Math.trunc(result);
+    }
+
+    ResultOutput(formula);
 }
 
 // 計算結果を表示
 function ResultOutput(formula){
     output = document.getElementById(`result`).firstChild;
-    if(result==null){
-        output.nodeValue = `result`;
+    if(result!=null){
+        if(mode_modulo!=true){
+            output.nodeValue = `${formula} = ${result}`;
+        }else{
+            output.nodeValue = `${formula} = ${result} mod ${modulo}`;
+        }
     }else{
-        output.nodeValue = `${formula} = ${result}`;
+        output.nodeValue = `result`;
     }
 }
 
