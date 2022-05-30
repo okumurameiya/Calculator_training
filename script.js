@@ -1,8 +1,9 @@
 
 let input;
-let fomula;
+let formula;
 let result=null;
 let output;
+let log;
 
 // キーダウンで入力欄にフォーカス
 document.addEventListener('keydown', function () {
@@ -13,31 +14,37 @@ document.addEventListener('keydown', function () {
 document.addEventListener('click', function (event) {
     let key = event.target.textContent
 
+    // キーパッド部がクリックされた際の処理
     if(event.target.className == 'key'){
         if(key=='BS'){    // バックスペース
             textbox.value = textbox.value.slice( 0, -1 ) ;
         }else{
             textbox.value += key;   // 押されたキーの文字を入力式に追加
         }
-        fomula = textbox.value;
-        Calc(fomula);
+        formula = textbox.value;
+        Calc(formula);
+
+    // ログ部がクリックされた際の処理
+    }else if(event.target.className == 'log_output'){
+        var log_id = event.target.id;
+        ReStore(log_id)
     }
   }, false);
 
 
 // 文字列から計算
-function Calc(fomula){
-    if(fomula.match(';') == null){
-        result = eval(fomula);
-        ResultOutput(fomula);
+function Calc(formula){
+    if(formula.match(';') == null){
+        result = eval(formula);
+        ResultOutput(formula);
     }
 }
 
 // 計算結果を表示
-function ResultOutput(fomula){
+function ResultOutput(formula){
     let result_out;
     result_out = document.getElementById(`result`).firstChild;
-    output = `${fomula} = ${result}`
+    output = `${formula} = ${result}`
     if(result==null){
         result_out.nodeValue = `result`;
     }else{
@@ -52,23 +59,39 @@ function ClearInput(){
     ResultOutput(null);
 }
 
-// 式と結果の保存機能(resultに値が残ると予期しない挙動になる)
-function Store(){
+
+// 式と結果の保存機能
+let log_num = 1;
+var log_formula = [];
+
+function Store(formula){
     var textbox_element = document.getElementById('log');
 
     // 新しいHTML要素を作成
-    var new_element = document.createElement('p');
-    new_element.textContent = output;
+    var log_output = document.createElement('p')
+    log_output.id = `log_${log_num}`
+    log_output.className = `log_output`
+    log_output.textContent = output;
+    textbox_element.prepend(log_output);
 
-    // 指定した要素の中の上部に挿入
-    textbox_element.prepend(new_element);
+    log_formula[log_num] = textbox.value;
+
+    log_num += 1;
 }
 
+// 式と結果の呼び出し機能
+function ReStore(log_id){
+    var n = log_id.slice( -1 ) ;
+    textbox.value = log_formula[Number(n)];
+    Calc(textbox.value);
+}
+
+
 // 平方根テスト
-function Root(fomula){
+function Root(formula){
     let regexp = /√\(.+?\)/g;   // 検索：√(***)
     let replaced
-    if (fomula.match(regexp) != null){
+    if (formula.match(regexp) != null){
      
     }
     return replaced;
