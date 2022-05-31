@@ -3,7 +3,7 @@
     --base-color-1: rgb(69, 78, 84);
     --base-color-2: rgb(76, 86, 92);
     --main-color-1: rgb(238, 246, 255);
-    --main-color-2: rgb(128, 255, 0);
+    --main-color-2: rgb(255, 196, 0);
     --accent-color: rgb(255, 0, 119);
     --height1: 500px;
 }
@@ -28,12 +28,12 @@ main{
 }
 
 #right {
-    background-color: var(--accent-color);
+    background-color: var(--base-color-1);
 
 }
 
 #left {
-    background-color: var(--main-color-1);
+    background-color: var(--base-color-1);
     
     padding: 10px;
     gap: 10px;
@@ -52,7 +52,6 @@ label{
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 0.2em;
-    /* padding: 10px; */
 
     width: 500px;
     height: 375px;
@@ -65,7 +64,6 @@ label{
 
     width: 300px;
     height: 375px;
-    /* background-color: var(--base-color-2); */
 }
 
 #subkey{
@@ -92,7 +90,7 @@ label{
     font-size: 24px;
     border-radius: 20px;
     display: grid;
-
+    margin-top: 5px;
 }
 
 input{
@@ -105,27 +103,22 @@ input{
     font-size: 24px;
     box-sizing: border-box;
     margin-left: 20px;
-
 }
 
 #result{
     height: 60px;
     width: 100%;
-    
     margin-left: 20px;
-
 }
 .flex-container{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: end;
 }
 label.result{
 font-size: medium;
-
+margin-right: 10px;
 }
-
-/* ---------------------------------- */
 
 /* popup_test */
 .open {
@@ -173,8 +166,6 @@ font-size: medium;
 	right: 4px;
 	font-size: 20px;
 }
-/* popup_test */
-
 
 /* ログ */
 #log {

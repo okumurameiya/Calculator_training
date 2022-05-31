@@ -8,7 +8,6 @@ let log;
 let modulo;
 let mode_modulo
 
-
 var adjust_keyInput = ['√', 'sin', 'cos', 'tan', ]; 
 var adjust_before   = ['√(', 'sin(', 'cos(', 'tan(', ]; 
 var adjust_after    = ['Math.sqrt(', 'Math.sin(', 'Math.cos(', 'Math.tan(', ];
@@ -20,7 +19,6 @@ document.addEventListener('keydown', function () {
 
 // ボタン入力
 document.addEventListener('click', function (event) {
-    
     let key = event.target.textContent
 
     // キーパッド部がクリックされた際の処理
@@ -28,14 +26,11 @@ document.addEventListener('click', function (event) {
         if(key=='BS'){    // バックスペース
             textbox.value = textbox.value.slice( 0, -1 ) ;
         }else if(key=='mod'){
-            mode_modulo=true;
+            mode_modulo=!mode_modulo;
         }else{
             textbox.value += key;   // 押されたキーの文字を入力式に追加
 
-            let i;
-            for(i = 0; i <= adjust_before.length; i++){
-                textbox.value.match(adjust_keyInput[i], adjust_after[i]);
-            }
+            AdjustFormula(textbox.value, adjust_keyInput, adjust_after)
         }
 
         input = textbox.value;
@@ -55,44 +50,40 @@ function KeyboardInput(){
 }
 
 // 入力を後段で計算できるように調整
-function AdjustFormula(input){
-    if(input.match(';') != null){
+function AdjustFormula(input, array_b, array_a){
+    if(input.match(';')){
         return null;
     }
+    
     let i;
-    for(i = 0; i <= adjust_before.length; i++){
-        input = input.replace(adjust_before[i], adjust_after[i]);
+    for(i = 0; i <= array_b.length; i++){
+        input = input.replace(array_b[i], array_a[i]);
     }
-   console.log(`formula: ${input}`);
     return input;
 }
 
 // 文字列から計算
 function Calc(input){
-    formula = AdjustFormula(input);
+    formula = AdjustFormula(input, adjust_before, adjust_after);
     result = eval(formula);
-    // console.log(result)
-    // console.log(formula)
+    output = `result`;
 
-    if(mode_modulo==true){
-        let formula_modulo = formula.replace('/', '%');
-        modulo = eval(formula_modulo);
-        result = Math.trunc(result);
+
+    if(formula){
+        output = `${formula} = ${result}`
+
+        if(mode_modulo){
+        CalcModulo();
+        }
     }
 
     ResultOutput(formula);
 }
 
 // 計算結果を表示
-function ResultOutput(formula){
-    let result_out;
-    result_out = document.getElementById(`result`).firstChild;
-    output = `${formula} = ${result}`
-    if(result==null){
-        result_out.nodeValue = `result`;
-    }else{
-        result_out.nodeValue = output;
-    }
+function ResultOutput(){
+    let result_out = document.getElementById(`result`).firstChild;
+    result_out.nodeValue = output;
 }
 
 // 入出力表示クリア
@@ -107,18 +98,15 @@ function ClearInput(){
 let log_num = 1;
 var log_formula = [];
 
-function Store(formula){
+function Store(){
     var textbox_element = document.getElementById('log');
 
     // 新しいHTML要素を作成
-
     var log_output = document.createElement('p')
     log_output.id = `log_${log_num}`
     log_output.className = `log_output`
     log_output.textContent = output;
     textbox_element.prepend(log_output);
-
-
     log_formula[log_num] = textbox.value;
 
     log_num += 1;
@@ -132,6 +120,17 @@ function ReStore(log_id){
     Calc(textbox.value);
 }
 
+function CalcModulo(){
+    let formula_modulo = formula.replace('/', '%');
+    modulo = eval(formula_modulo);
+    if(modulo % 1 != 0){
+        output = "剰余計算は小数を含む入力に対応していません。"
+    }else{
+    result = Math.trunc(result);
+    output = `${formula} = ${result} mod ${modulo}`;
+    }
+}
+
 // ショートカットキー機能
 document.addEventListener('keypress', keypress_ivent);
 
@@ -141,10 +140,4 @@ function keypress_ivent(e) {
 	if(e.key === 'Enter'){
         Store();
 	}
-
-    // Delete: Clear(不具合)
-    if(e.key === 'Esc'){
-        ClearInput();
-	}
-	return false; 
 }
