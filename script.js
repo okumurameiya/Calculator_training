@@ -8,9 +8,9 @@ let log;
 let modulo;
 let mode_modulo
 
-var adjust_keyInput = ['√', 'sin', 'cos', 'tan', ]; 
-var adjust_before   = ['√(', 'sin(', 'cos(', 'tan(', ]; 
-var adjust_after    = ['Math.sqrt(', 'Math.sin(', 'Math.cos(', 'Math.tan(', ];
+var adjust_keyInput = ['^', '√', 'sin', 'cos', 'tan', ]; 
+var adjust_before   = ['^', '√(', 'sin(', 'cos(', 'tan(', ]; 
+var adjust_after    = ['**', 'Math.sqrt(', 'Math.sin(', 'Math.cos(', 'Math.tan(', ];
 
 // キーダウンで入力欄にフォーカス
 document.addEventListener('keydown', function () {
@@ -25,6 +25,9 @@ document.addEventListener('click', function (event) {
     if(event.target.className == 'key'){
         if(key=='BS'){    // バックスペース
             textbox.value = textbox.value.slice( 0, -1 ) ;
+        // }else if(key=='^'){    // 累乗
+        //     textbox.value = textbox.value + '**';
+        
         }else if(key=='mod'){
             mode_modulo=!mode_modulo;
         }else{
@@ -89,8 +92,10 @@ function ResultOutput(){
 // 入出力表示クリア
 function ClearInput(){
     textbox.value = null;
+    formula = null;
     result = null;
-    ResultOutput(null);
+    output = `result`;
+    ResultOutput();
 }
 
 
@@ -99,6 +104,7 @@ let log_num = 1;
 var log_formula = [];
 
 function Store(){
+    if(!result){return 0;}
     var textbox_element = document.getElementById('log');
 
     // 新しいHTML要素を作成
