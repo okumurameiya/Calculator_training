@@ -11,12 +11,97 @@
     </head>
 
     <body>
-        <!--電卓テスト-->
-        <input type="text" placeholder="電卓テスト" id="fomula">
-        <button onclick="CalcTest()">送信</button>
-        <p id="result">
-            result
-        </p>
+        <header>
+            <!--メニュー等-->
+            <section>
+                <label class="open" for="pop-up">Settings</label>
+            </section>
+        </header>
+        <main>
+    
+            <!--左側-->
+            <section id="left">
+                <input type="checkbox" id="pop-up">
+                    <div class="overlay">
+                        <div class="window">
+                            <div class="title">
+                                Settings
+                                <label class="close" for="pop-up">x</label>
+                            </div>
+                            <div class="settings">
+                                <p>
+                                    ポップアップの中身が入ります
+                                    <p>設定1</p>
+                                    <p>設定2</p>
+                                    <p>設定2</p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                
 
+                <!--キーパッド等-->
+                <section id="keypad">
+                    
+                    <section id="mainkey">
+                        <label onclick="ButtonInput()" class="key">(</label>
+                        <label onclick="ButtonInput()" class="key">)</label>
+                        <label onclick="ButtonInput()" class="key">BS</label>
+                        <label onclick="ButtonInput()" class="key">^</label>
+                        <label onclick="ButtonInput()" class="key">7</label>
+                        <label onclick="ButtonInput()" class="key">8</label>
+                        <label onclick="ButtonInput()" class="key">9</label>
+                        <label onclick="ButtonInput()" class="key">/</label>
+                        <label onclick="ButtonInput()" class="key">4</label>
+                        <label onclick="ButtonInput()" class="key">5</label>
+                        <label onclick="ButtonInput()" class="key">6</label>
+                        <label onclick="ButtonInput()" class="key">*</label>
+                        <label onclick="ButtonInput()" class="key">1</label>
+                        <label onclick="ButtonInput()" class="key">2</label>
+                        <label onclick="ButtonInput()" class="key">3</label>
+                        <label onclick="ButtonInput()" class="key">-</label>
+                        <label onclick="ButtonInput()" class="key">0</label>
+                        <label onclick="ButtonInput()" class="key">.</label>
+                        <label onclick="ButtonInput()" class="key">=</label>
+                        <label onclick="ButtonInput()" class="key">+</label>
+                    </section>
+                    
+                    <section id="subkey">
+                        <div class="key">√</div>
+                        <div class="key">sin</div>
+                        <div class="key">cos</div>
+                        <div class="key">tan</div>
+                        <div class="key">NA</div>
+                    </section>
+                </section>
+
+                <!--入力/式表示-->
+                <section id="form">
+                    <div class="form-item">
+                        <input type="text" placeholder="式を入力" onkeyup="KeyInput();" id="textbox">
+                    </div>
+                    <div class="form-item">
+                        <div id="result">result</div>
+                        <div class="flex-container>">
+                            <label Class="result" onclick="StoreInput();">Store</label>
+                            <label Class="result" onclick="ClearInput();">Clear</label>
+                        </div>
+                    </div>
+                       
+                    
+                </section>
+            </section>
+
+            <!--左側-->
+            <section id="right">
+
+                <section id="log">
+                log
+
+                    
+                </section>
+            </section>
+            
+        </main>
     </body>
 </html>
