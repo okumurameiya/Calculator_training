@@ -44,26 +44,26 @@
                 <section id="keypad">
                     
                     <section id="mainkey">
-                        <label onclick="ButtonInput()" class="key">(</label>
-                        <label onclick="ButtonInput()" class="key">)</label>
-                        <label onclick="ButtonInput()" class="key">BS</label>
-                        <label onclick="ButtonInput()" class="key">^</label>
-                        <label onclick="ButtonInput()" class="key">7</label>
-                        <label onclick="ButtonInput()" class="key">8</label>
-                        <label onclick="ButtonInput()" class="key">9</label>
-                        <label onclick="ButtonInput()" class="key">/</label>
-                        <label onclick="ButtonInput()" class="key">4</label>
-                        <label onclick="ButtonInput()" class="key">5</label>
-                        <label onclick="ButtonInput()" class="key">6</label>
-                        <label onclick="ButtonInput()" class="key">*</label>
-                        <label onclick="ButtonInput()" class="key">1</label>
-                        <label onclick="ButtonInput()" class="key">2</label>
-                        <label onclick="ButtonInput()" class="key">3</label>
-                        <label onclick="ButtonInput()" class="key">-</label>
-                        <label onclick="ButtonInput()" class="key">0</label>
-                        <label onclick="ButtonInput()" class="key">.</label>
-                        <label onclick="ButtonInput()" class="key">=</label>
-                        <label onclick="ButtonInput()" class="key">+</label>
+                        <label class="key">(</label>
+                        <label class="key">)</label>
+                        <label class="key">BS</label>
+                        <label class="key">^</label>
+                        <label class="key">7</label>
+                        <label class="key">8</label>
+                        <label class="key">9</label>
+                        <label class="key">/</label>
+                        <label class="key">4</label>
+                        <label class="key">5</label>
+                        <label class="key">6</label>
+                        <label class="key">*</label>
+                        <label class="key">1</label>
+                        <label class="key">2</label>
+                        <label class="key">3</label>
+                        <label class="key">-</label>
+                        <label class="key">0</label>
+                        <label class="key">.</label>
+                        <label class="key">=</label>
+                        <label class="key">+</label>
                     </section>
                     
                     <section id="subkey">
@@ -71,19 +71,21 @@
                         <div class="key">sin</div>
                         <div class="key">cos</div>
                         <div class="key">tan</div>
-                        <div class="key">NA</div>
+                        <div class="key">mod</div>
                     </section>
                 </section>
 
                 <!--入力/式表示-->
                 <section id="form">
                     <div class="form-item">
-                        <input type="text" placeholder="式を入力" onkeyup="KeyInput();" id="textbox">
+                        <!-- キーアップでCalc()起動 -->
+                        <input type="text" placeholder="式を入力" onkeyup="KeyboardInput();" id="textbox">
+                        <!-- <input type="text" placeholder="式を入力" onkeyup="Calc(textbox.value);" id="textbox"> -->
                     </div>
                     <div class="form-item">
                         <div id="result">result</div>
                         <div class="flex-container>">
-                            <label Class="result" onclick="StoreInput();">Store</label>
+                            <label Class="result" onclick="Store();">Store</label>
                             <label Class="result" onclick="ClearInput();">Clear</label>
                         </div>
                     </div>
@@ -97,8 +99,6 @@
 
                 <section id="log">
                 log
-
-                    
                 </section>
             </section>
             
