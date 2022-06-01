@@ -109,7 +109,7 @@ function Store(){
 
     // 新しいHTML要素を作成
     var log_output = document.createElement('p')
-    log_output.id = `log_${log_num}`
+    log_output.id = log_num;
     log_output.className = `log_output`
     log_output.textContent = output;
     textbox_element.prepend(log_output);
@@ -121,9 +121,9 @@ function Store(){
 
 // 式と結果の呼び出し機能
 function ReStore(log_id){
-    var n = log_id.slice( -1 ) ;
-    textbox.value = log_formula[Number(n)];
+    textbox.value = log_formula[log_id];
     Calc(textbox.value);
+    console.log(log_id);
 }
 
 function CalcModulo(){
