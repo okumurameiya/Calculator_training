@@ -8,9 +8,8 @@ let log;
 let modulo;
 let mode_modulo
 
-var adjust_keyInput = ['^', '√', 'sin', 'cos', 'tan', ]; 
-var adjust_before   = ['^', '√(', 'sin(', 'cos(', 'tan(', ]; 
-var adjust_after    = ['**', 'Math.sqrt(', 'Math.sin(', 'Math.cos(', 'Math.tan(', ];
+var adjust_before = [/\^/g, /√\(/g, /sin\(/g, /cos\(/g, /tan\(/g]; 
+var adjust_after  = ['**', 'Math.sqrt(', 'Math.sin(', 'Math.cos(', 'Math.tan('];
 
 // キーダウンで入力欄にフォーカス
 document.addEventListener('keydown', function () {
@@ -25,15 +24,10 @@ document.addEventListener('click', function (event) {
     if(event.target.className == 'key'){
         if(key=='BS'){    // バックスペース
             textbox.value = textbox.value.slice( 0, -1 ) ;
-        // }else if(key=='^'){    // 累乗
-        //     textbox.value = textbox.value + '**';
-        
         }else if(key=='mod'){
             mode_modulo=!mode_modulo;
         }else{
             textbox.value += key;   // 押されたキーの文字を入力式に追加
-
-            AdjustFormula(textbox.value, adjust_keyInput, adjust_after)
         }
 
         input = textbox.value;
@@ -52,35 +46,47 @@ function KeyboardInput(){
     Calc(input);
 }
 
-// 入力を後段で計算できるように調整
-function AdjustFormula(input, array_b, array_a){
-    if(input.match(';')){
-        return null;
-    }
-    
-    let i;
-    for(i = 0; i <= array_b.length; i++){
-        input = input.replace(array_b[i], array_a[i]);
-    }
-    return input;
-}
+
 
 // 文字列から計算
 function Calc(input){
     formula = AdjustFormula(input, adjust_before, adjust_after);
     result = eval(formula);
+    
     output = `result`;
 
-
-    if(formula){
+    if(formula && !isNaN(result) &&result){
         output = `${formula} = ${result}`
 
         if(mode_modulo){
         CalcModulo();
         }
     }
-
     ResultOutput(formula);
+}
+
+// 入力を後段で計算できるように調整
+function AdjustFormula(input, array_b, array_a){
+    if(
+        input.match(';')||
+        input.match(RegExp('^(?=.*[a-zA-Z])([^'+array_b.join('|')+']).*$')) 
+        )
+        { console.log('match');return null; }
+    
+    // 数字の先頭に0が付くと8進数として処理されることへの対策
+    let reg = /(^|\D)0/g;
+    while (pos = reg.exec(input)) {
+        if(pos[1]){pos.index+=1;}
+        let head = input.slice(0, pos.index);
+        let tail = input.slice(pos.index+1, input.length);
+        input = head + tail;
+    }
+    
+    let i;
+    for(i = 0; i < array_b.length; i++){
+        input = input.replace(array_b[i], array_a[i]);
+    }
+    return input;
 }
 
 // 計算結果を表示
@@ -98,13 +104,12 @@ function ClearInput(){
     ResultOutput();
 }
 
-
 // 式と結果の保存機能
 let log_num = 1;
 var log_formula = [];
 
 function Store(){
-    if(!result){return 0;}
+    if(isNaN(result)||!result){return 0;}
     var textbox_element = document.getElementById('log');
 
     // 新しいHTML要素を作成
@@ -118,14 +123,13 @@ function Store(){
     log_num += 1;
 }
 
-
 // 式と結果の呼び出し機能
 function ReStore(log_id){
     textbox.value = log_formula[log_id];
     Calc(textbox.value);
-    console.log(log_id);
 }
 
+// 剰余計算機能
 function CalcModulo(){
     let formula_modulo = formula.replace('/', '%');
     modulo = eval(formula_modulo);
